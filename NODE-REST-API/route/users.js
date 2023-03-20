@@ -3,10 +3,18 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const { findByIdAndUpdate } = require("../models/User");
 
-//get all users
-// router.get("/",async(req,res)=>{
-//   const userList=await 
-// })
+//get users
+router.get("/",async(req,res)=>{
+const exUserName=req.query.username
+const mobile=req.query.mobile 
+try{
+const existingUser=exUserName?await User.findOne({username:exUserName}):await User.findOne({mobile:mobile})
+const {_id,username,profilePic}=existingUser
+res.status(200).json({_id,username,profilePic})
+}catch(err){
+  console.log(err);
+}
+});
 
 //update user
 router.put("/:id", async (req, res) => {
@@ -61,22 +69,22 @@ router.get("/", async (req, res) => {
 });
 
 //get friends
-router.get("/friends/:id",async(req,res)=>{
-  try{
-    const user=await User.findById(req.params.id)
-    const friends=await Promise.all(
-      user.followings.map((followerId)=>{
+router.get("/friends/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const friends = await Promise.all(
+      user.followings.map((followerId) => {
         return User.findById(followerId);
       })
     );
-    let friendList=[];
-    friends.map((eachFriend)=>{
-      const {_id,username,profilePic}=eachFriend;
-      friendList.push({_id,username,profilePic});
+    let friendList = [];
+    friends.map((eachFriend) => {
+      const { _id, username, profilePic } = eachFriend;
+      friendList.push({ _id, username, profilePic });
     });
     res.status(200).json(friendList);
-  }catch(err){
-    res.status(500).json(err)
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

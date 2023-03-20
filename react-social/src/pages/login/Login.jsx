@@ -3,13 +3,15 @@ import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Login() {
+
+export default function Login(props) {
   const mobile = useRef();
   const password = useRef();
   const { user, isFetching, dispatch } = useContext(AuthContext);
 
   const onLogin = (event) => {
     event.preventDefault();
+    console.log( { mobile: mobile.current.value, password: password.current.value })
     loginCall(
       { mobile: mobile.current.value, password: password.current.value },
       dispatch

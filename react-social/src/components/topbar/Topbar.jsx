@@ -7,6 +7,12 @@ import { AuthContext } from "../../context/AuthContext";
 export default function Topbar() {
   const { user } = useContext(AuthContext);
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const onLogOut=()=>{
+    localStorage.clear("user")
+    window.location.reload();
+  }
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -18,7 +24,7 @@ export default function Topbar() {
         <div className="searchbar">
           <Search className="searchIcon" />
           <input
-            placeholder="Search for friend, post or video"
+            placeholder="Search for name, email or contact number"
             className="searchInput"
           />
         </div>
@@ -49,6 +55,9 @@ export default function Topbar() {
           className="topbarImg"
         />
         </Link>
+        <button type="button" className="logOutBtn" onClick={onLogOut}>
+        Log Out
+        </button>
       </div>
     </div>
   );

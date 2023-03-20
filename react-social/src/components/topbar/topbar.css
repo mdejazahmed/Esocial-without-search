@@ -98,4 +98,12 @@
   .logoLink{
     text-decoration: none;
   }
+  .logOutBtn{
+    border: none;
+    padding:.3rem;
+    border-radius:.4rem;
+    color: #0ba346;
+    background-color:white;
+    font-weight: 500;
+  }
   

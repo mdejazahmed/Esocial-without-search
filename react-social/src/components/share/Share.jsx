@@ -11,10 +11,10 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
 export default function Share() {
+  const desc = useRef();
   const { user } = useContext(AuthContext);
   const pf = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
-  const desc = useRef();
 
   const onShare = async (event) => {
     event.preventDefault();
@@ -22,10 +22,9 @@ export default function Share() {
       userId: user._id,
       desc: desc.current.value,
     };
-    console.log(newPost);
     try {
       await axios.post("/posts", newPost);
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -49,9 +48,11 @@ export default function Share() {
             alt=""
           />
           <input
+            type="text"
             placeholder={`What's in your mind ${user.username} ?`}
             className="shareInput"
             ref={desc}
+            onChange={(e) => console.log(e.target.value)}
           />
         </div>
         <hr className="shareHr" />

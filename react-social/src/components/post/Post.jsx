@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import "./post.css";
-import { MoreVert } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios"
 import {format} from 'timeago.js'
@@ -36,6 +36,16 @@ export default function Post({ postDetails }) {
     setLike(isLiked ? like-1 : like+1)
     setIsLiked(!isLiked)
   }
+console.log("/posts/:"+postDetails._id)
+console.log(postDetails.userId)
+  const onDelete=async()=>{
+    try {
+      await axios.delete("/posts/"+postDetails._id,{userId:postDetails.userId});
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
@@ -56,7 +66,7 @@ export default function Post({ postDetails }) {
             <span className="postDate">{format(postDetails.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+            <Delete style={{color:"gray"}} onClick={onDelete}/>
           </div>
         </div>
         <div className="postCenter">

@@ -13,22 +13,28 @@ export default function Rightbar({ user }) {
   const [friends, setFriends] = useState([]);
   const { user: currentUser } = useContext(AuthContext);
   const [isFollow, setIsFollow] = useState(false);
+  // const [allUsers,setAllUsers]=useState([])
 
   // useEffect(() => {
-  //   setIsFollow(currentUser.followings.includes(user._id));
-  // }, [currentUser, user._id]);
+  //   const getAllUsers=async()=>{
+  //       const res=await axios.get("/users");
+  //       setAllUsers(res.data)
+  //   }
+  //   getAllUsers();
+  //   console.log(allUsers)
+  // }, []);
 
   useEffect(() => {
     const getFriendsList = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get("/users/friends/" +currentUser._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error);
       }
     };
     getFriendsList();
-  }, [user]);
+  }, [currentUser]);
 
   const onFollowBtn = async () => {
     try {

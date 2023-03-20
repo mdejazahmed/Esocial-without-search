@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router';
+import {useNavigate } from 'react-router';
 import "./register.css";
 ;
 
@@ -24,6 +24,7 @@ if(passwordAgain.current.value!==password.current.value){
     email:email.current.value,
     password:password.current.value
   }
+  console.log(userCredential);
   try {
     await axios.post("/auth/register",userCredential);
     navigate("/login");
@@ -32,6 +33,8 @@ if(passwordAgain.current.value!==password.current.value){
   }
 }
 }
+
+const onLogInInto=()=>navigate("/login");
 
   return (
     <div className="login">
@@ -50,7 +53,7 @@ if(passwordAgain.current.value!==password.current.value){
             <input type="password" required minLength="6" placeholder="Password" ref={password} className="loginInput" />
             <input type="password" required minLength="6" placeholder="Password Again" ref={passwordAgain} className="loginInput" />
             <button className="loginButton">Sign Up</button>
-            <button className="loginRegisterButton">
+            <button className="loginRegisterButton" onClick={onLogInInto}>
               Log into Account
             </button>
           </form>
